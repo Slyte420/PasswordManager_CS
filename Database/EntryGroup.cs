@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Database
 {
-    internal class EntryGroup
+    public class EntryGroup
     {
         public int Id { get; set; }
         public string Name { get; set; } = null!;

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Database
 {
-    internal class SQLSContext : DbContext
+    public class SQLSContext : DbContext
     {
         public DbSet<User> Users { get; set; }
         public DbSet<Entry> Entries { get; set; }

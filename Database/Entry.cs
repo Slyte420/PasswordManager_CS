@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Database
 {
-    internal class Entry
+    public class Entry
     {
         public int Id { get; set; }
         public string Name { get; set; } = null!;
