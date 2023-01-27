@@ -34,6 +34,8 @@
             this.textBoxPassword = new System.Windows.Forms.TextBox();
             this.buttonRegister = new System.Windows.Forms.Button();
             this.buttonBack = new System.Windows.Forms.Button();
+            this.buttonSaveKey = new System.Windows.Forms.Button();
+            this.keyFolderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
             this.SuspendLayout();
             // 
             // textBoxUsername
@@ -71,7 +73,7 @@
             // 
             // buttonRegister
             // 
-            this.buttonRegister.Location = new System.Drawing.Point(291, 199);
+            this.buttonRegister.Location = new System.Drawing.Point(291, 215);
             this.buttonRegister.Name = "buttonRegister";
             this.buttonRegister.Size = new System.Drawing.Size(203, 23);
             this.buttonRegister.TabIndex = 4;
@@ -89,11 +91,22 @@
             this.buttonBack.UseVisualStyleBackColor = true;
             this.buttonBack.Click += new System.EventHandler(this.buttonBack_Click);
             // 
+            // buttonSaveKey
+            // 
+            this.buttonSaveKey.Location = new System.Drawing.Point(291, 186);
+            this.buttonSaveKey.Name = "buttonSaveKey";
+            this.buttonSaveKey.Size = new System.Drawing.Size(203, 23);
+            this.buttonSaveKey.TabIndex = 6;
+            this.buttonSaveKey.Text = "Where to Save Key";
+            this.buttonSaveKey.UseVisualStyleBackColor = true;
+            this.buttonSaveKey.Click += new System.EventHandler(this.buttonSaveKey_Click);
+            // 
             // RegisterMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.buttonSaveKey);
             this.Controls.Add(this.buttonBack);
             this.Controls.Add(this.buttonRegister);
             this.Controls.Add(this.labelPassword);
@@ -116,5 +129,7 @@
         private TextBox textBoxPassword;
         private Button buttonRegister;
         private Button buttonBack;
+        private Button buttonSaveKey;
+        private FolderBrowserDialog keyFolderBrowserDialog;
     }
 }

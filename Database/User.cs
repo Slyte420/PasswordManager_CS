@@ -9,8 +9,10 @@ namespace Database
     public class User
     {
         public int Id { get; set; }
-        public string UserName { get; set; } = null!;
-        public string PasswordHash { get; set; } = null!;
-        public string Salt { get; set; } = null!;
+        public string Username { get; set; } = null!;
+        public byte[] Password { get; set; } = null!;
+        public byte[] Salt { get; set; } = null!;
+        public byte[] IV { get; set; } = null!;
+        public byte[] keyHash { get; set; } = null!;
     }
 }

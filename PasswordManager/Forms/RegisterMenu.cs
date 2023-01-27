@@ -1,4 +1,5 @@
 ﻿using Database;
+using PasswordManager.Crypto;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -16,11 +17,14 @@ namespace PasswordManager
     {
         private SQLSContext context = null!;
         private FirstMenu firstMenu = null!;
+        private CryptoInstance instanceC= null!;
+        private string? selectedFolder;
         public RegisterMenu(SQLSContext context,FirstMenu firstMenu)
         {
             InitializeComponent();
             this.firstMenu = firstMenu;
             this.context = context;
+            instanceC = CryptoInstance.GetInstance();
         }
 
 
@@ -39,14 +43,45 @@ namespace PasswordManager
 
         private void buttonRegister_Click(object sender, EventArgs e)
         {
-            string Username = textBoxUsername.Text;
+            if(selectedFolder is null)
+            {
+                MessageBox.Show("No folder selected");
+                return;
+            }
+            string username = textBoxUsername.Text;
             var queryUsername = from user in context.Users
-                                where user.UserName== Username
-                                select user.UserName;
+                                where user.Username== username
+                                select user.Username;
             if (!queryUsername.Any())
             {
-                string Password = textBoxPassword.Text;
-                //Hash Function
+                string password = textBoxPassword.Text;
+                byte[] salt = instanceC.generateSalt(32);
+                byte[]? passwordHash = instanceC.hashStringSalt(password, salt);
+                if(passwordHash is null) {
+                    return;
+                }
+                instanceC.setAesFromPasswordStringForKey(password,salt);
+                instanceC.getRSAEncryptedFile(username,selectedFolder,passwordHash);
+                instanceC.setAesFromPasswordStringForPasswords(password,salt);
+                byte[]? keyHash = instanceC.getPrivateKeyHash(salt);
+                byte[] encryptedIV = instanceC.getIVEncrypted();
+                if(keyHash is null)
+                {
+                    return;
+                }
+                User currentUser = new User { Username = username,Password=passwordHash,Salt=salt,keyHash=keyHash,IV=encryptedIV };
+                context.Users.Add(currentUser);
+                context.SaveChanges();
+                this.Hide();
+                //Main menu form
+            }
+        }
+
+        private void buttonSaveKey_Click(object sender, EventArgs e)
+        {
+            if(keyFolderBrowserDialog.ShowDialog() == DialogResult.OK)
+            {
+                selectedFolder = keyFolderBrowserDialog.SelectedPath;
             }
         }
     }
