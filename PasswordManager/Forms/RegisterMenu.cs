@@ -30,8 +30,7 @@ namespace PasswordManager
 
         private void RegisterMenu_FormClosing(object sender, FormClosingEventArgs e)
         {
-            this.Dispose();
-            firstMenu.Close();
+            //firstMenu.Close();
         }
 
         private void buttonBack_Click(object sender, EventArgs e)
