@@ -34,8 +34,20 @@ namespace PasswordManager
         {
             this.Hide();
             firstMenu.Show();
-            this.Dispose();
             
+        }
+
+        private void buttonRegister_Click(object sender, EventArgs e)
+        {
+            string Username = textBoxUsername.Text;
+            var queryUsername = from user in context.Users
+                                where user.UserName== Username
+                                select user.UserName;
+            if (!queryUsername.Any())
+            {
+                string Password = textBoxPassword.Text;
+                //Hash Function
+            }
         }
     }
 }

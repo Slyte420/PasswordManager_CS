@@ -28,20 +28,20 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.textBoxUsername = new System.Windows.Forms.TextBox();
             this.labelUsername = new System.Windows.Forms.Label();
             this.labelPassword = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.textBoxPassword = new System.Windows.Forms.TextBox();
             this.buttonRegister = new System.Windows.Forms.Button();
             this.buttonBack = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // textBox1
+            // textBoxUsername
             // 
-            this.textBox1.Location = new System.Drawing.Point(355, 113);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(139, 23);
-            this.textBox1.TabIndex = 0;
+            this.textBoxUsername.Location = new System.Drawing.Point(355, 113);
+            this.textBoxUsername.Name = "textBoxUsername";
+            this.textBoxUsername.Size = new System.Drawing.Size(139, 23);
+            this.textBoxUsername.TabIndex = 0;
             // 
             // labelUsername
             // 
@@ -61,12 +61,13 @@
             this.labelPassword.TabIndex = 3;
             this.labelPassword.Text = "Password:";
             // 
-            // textBox2
+            // textBoxPassword
             // 
-            this.textBox2.Location = new System.Drawing.Point(355, 157);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(139, 23);
-            this.textBox2.TabIndex = 2;
+            this.textBoxPassword.Location = new System.Drawing.Point(355, 157);
+            this.textBoxPassword.Name = "textBoxPassword";
+            this.textBoxPassword.Size = new System.Drawing.Size(139, 23);
+            this.textBoxPassword.TabIndex = 2;
+            this.textBoxPassword.UseSystemPasswordChar = true;
             // 
             // buttonRegister
             // 
@@ -76,6 +77,7 @@
             this.buttonRegister.TabIndex = 4;
             this.buttonRegister.Text = "Register";
             this.buttonRegister.UseVisualStyleBackColor = true;
+            this.buttonRegister.Click += new System.EventHandler(this.buttonRegister_Click);
             // 
             // buttonBack
             // 
@@ -95,9 +97,9 @@
             this.Controls.Add(this.buttonBack);
             this.Controls.Add(this.buttonRegister);
             this.Controls.Add(this.labelPassword);
-            this.Controls.Add(this.textBox2);
+            this.Controls.Add(this.textBoxPassword);
             this.Controls.Add(this.labelUsername);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.textBoxUsername);
             this.Name = "RegisterMenu";
             this.Text = "RegisterMenu";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.RegisterMenu_FormClosing);
@@ -108,10 +110,10 @@
 
         #endregion
 
-        private TextBox textBox1;
+        private TextBox textBoxUsername;
         private Label labelUsername;
         private Label labelPassword;
-        private TextBox textBox2;
+        private TextBox textBoxPassword;
         private Button buttonRegister;
         private Button buttonBack;
     }
