@@ -34,12 +34,12 @@ namespace PasswordManager.Crypto
         public string? hashString(string text)
         {
             if(SHAinstance is not null) { 
-            byte[] textByte = Encoding.ASCII.GetBytes(text);
+            byte[] textByte = Encoding.UTF8.GetBytes(text);
             SHAinstance.ComputeHash(textByte);
             byte[]? hashB = SHAinstance.Hash;
                 if(hashB != null) 
                 {
-                    string hashS = Encoding.ASCII.GetString(hashB);
+                    string hashS = Encoding.UTF8.GetString(hashB);
                     return hashS;
                 }
             }
@@ -70,7 +70,7 @@ namespace PasswordManager.Crypto
             byte[] encryptedIV = RSAInstance.Encrypt(IV,RSAPadding);
             return encryptedIV;
         }
-        public void getRSAEncryptedFile(string username,string selectedFolder,byte[] passwordHash)
+        public void placeRSAEncryptedFile(string username,string selectedFolder,byte[] passwordHash)
         {
             string fileName = username + ".key";
             string filePath = Path.Combine(selectedFolder,fileName);
@@ -99,7 +99,7 @@ namespace PasswordManager.Crypto
 
         public byte[]? hashStringSalt(string text, byte[] salt) {
             if(SHAinstance is not null) { 
-            byte[] textByte = Encoding.ASCII.GetBytes(text);
+            byte[] textByte = Encoding.UTF8.GetBytes(text);
             byte[] hashStringSalt = new byte[textByte.Length + salt.Length];
             Buffer.BlockCopy(textByte, 0, hashStringSalt, 0, textByte.Length);
             Buffer.BlockCopy(salt, 0, hashStringSalt, textByte.Length, salt.Length);
@@ -129,7 +129,7 @@ namespace PasswordManager.Crypto
                         streamWriter.Write(text);
                     }
                 }
-               return  Encoding.ASCII.GetString( memoryStream.ToArray());
+               return  Encoding.UTF8.GetString( memoryStream.ToArray());
             }
         }
         public string decryptString(string text)
@@ -144,7 +144,7 @@ namespace PasswordManager.Crypto
                         streamWriter.Write(text);
                     }
                 }
-                return Encoding.ASCII.GetString(memoryStream.ToArray());
+                return Encoding.UTF8.GetString(memoryStream.ToArray());
             }
         }
     }

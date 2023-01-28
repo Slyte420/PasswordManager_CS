@@ -15,29 +15,66 @@ namespace PasswordManager.Forms
     public partial class AddEditEntryDialog : Form
     {
         private CryptoInstance instanceC;
-        public AddEditEntryDialog()
+        private List<EntryGroup> groups;
+        private Entry? exist;
+        public AddEditEntryDialog(List<EntryGroup> groups)
         {
             InitializeComponent();
             instanceC = CryptoInstance.GetInstance();
+            this.groups= groups;
+            comboBoxGroup.Items.Add("None");
+            foreach(var group in groups)
+            {
+                comboBoxGroup.Items.Add(group.Name);
+            }
         }
-        public AddEditEntryDialog(Entry entry)
+        public AddEditEntryDialog(List<EntryGroup> groups,Entry entry) : this(groups)
         {
-            InitializeComponent();
-            instanceC = CryptoInstance.GetInstance();
+            exist = entry;
             textBoxName.Text = entry.Name;
             textBoxUsername.Text = entry.Username;
-            textBoxPassword.Text = instanceC.decryptString(Text);
+            //textBoxPassword.Text = instanceC.decryptString(Text);
             textBoxURL.Text = entry.URL;
             textBoxNote.Text = entry.Note;
+            var query = (from gr in groups
+                         where gr.Id == entry.GroupId
+                         select gr);
+            if (query.Any())
+            {
+                var result = query.First();
+                comboBoxGroup.SelectedIndex = groups.IndexOf(result) + 1;
+            }
         }
 
         public Entry? getEntry()
         {
-            if(textBoxPassword.Text == string.Empty)
+            
+            if(textBoxPassword.Text == string.Empty || DialogResult == DialogResult.Cancel)
             {
                 return null;
             }
-            Entry current = new Entry { };
+            Entry? current = exist;
+            if (current == null)
+            {
+                current = new Entry() { Name = textBoxName.Text, Username = textBoxUsername.Text, Note = textBoxNote.Text, URL = textBoxURL.Text };
+            }
+            else
+            {
+                current.Name = textBoxName.Text;
+                current.Username = textBoxUsername.Text;
+                current.URL = textBoxURL.Text;
+                current.Note = textBoxNote.Text;
+
+            }
+            current.Password = instanceC.encryptString(textBoxPassword.Text);
+            if((comboBoxGroup.SelectedIndex-1) >= 0)
+            {
+                current.GroupId = groups[comboBoxGroup.SelectedIndex - 1].Id;
+            }
+            else
+            {
+                current.GroupId = null;
+            }
             return current;
         }
         private bool valid()

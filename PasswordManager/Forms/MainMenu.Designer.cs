@@ -40,6 +40,7 @@
             this.buttonDeleteGroup = new System.Windows.Forms.Button();
             this.buttonShowPass = new System.Windows.Forms.Button();
             this.buttonFindEntry = new System.Windows.Forms.Button();
+            this.buttonExit = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewData)).BeginInit();
             this.SuspendLayout();
             // 
@@ -49,11 +50,17 @@
             this.dataGridViewData.AllowUserToDeleteRows = false;
             this.dataGridViewData.AllowUserToResizeColumns = false;
             this.dataGridViewData.AllowUserToResizeRows = false;
+            this.dataGridViewData.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dataGridViewData.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.DisplayedCells;
             this.dataGridViewData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewData.Location = new System.Drawing.Point(108, 80);
             this.dataGridViewData.Name = "dataGridViewData";
             this.dataGridViewData.ReadOnly = true;
+            this.dataGridViewData.RowHeadersVisible = false;
+            this.dataGridViewData.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToDisplayedHeaders;
             this.dataGridViewData.RowTemplate.Height = 25;
+            this.dataGridViewData.RowTemplate.ReadOnly = true;
+            this.dataGridViewData.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridViewData.Size = new System.Drawing.Size(581, 329);
             this.dataGridViewData.TabIndex = 0;
             // 
@@ -85,6 +92,7 @@
             this.buttonEdit.TabIndex = 3;
             this.buttonEdit.Text = "Edit";
             this.buttonEdit.UseVisualStyleBackColor = true;
+            this.buttonEdit.Click += new System.EventHandler(this.buttonEdit_Click);
             // 
             // buttonDelete
             // 
@@ -94,6 +102,7 @@
             this.buttonDelete.TabIndex = 4;
             this.buttonDelete.Text = "Delete";
             this.buttonDelete.UseVisualStyleBackColor = true;
+            this.buttonDelete.Click += new System.EventHandler(this.buttonDelete_Click);
             // 
             // buttonSave
             // 
@@ -158,11 +167,21 @@
             this.buttonFindEntry.Text = "Find Entry";
             this.buttonFindEntry.UseVisualStyleBackColor = true;
             // 
+            // buttonExit
+            // 
+            this.buttonExit.Location = new System.Drawing.Point(699, 415);
+            this.buttonExit.Name = "buttonExit";
+            this.buttonExit.Size = new System.Drawing.Size(75, 23);
+            this.buttonExit.TabIndex = 12;
+            this.buttonExit.Text = "Exit";
+            this.buttonExit.UseVisualStyleBackColor = true;
+            // 
             // MainMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.buttonExit);
             this.Controls.Add(this.buttonFindEntry);
             this.Controls.Add(this.buttonShowPass);
             this.Controls.Add(this.buttonDeleteGroup);
@@ -197,5 +216,6 @@
         private Button buttonDeleteGroup;
         private Button buttonShowPass;
         private Button buttonFindEntry;
+        private Button buttonExit;
     }
 }

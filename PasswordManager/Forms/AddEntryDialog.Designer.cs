@@ -40,6 +40,8 @@
             this.labelNotes = new System.Windows.Forms.Label();
             this.buttonOK = new System.Windows.Forms.Button();
             this.buttonCancel = new System.Windows.Forms.Button();
+            this.comboBoxGroup = new System.Windows.Forms.ComboBox();
+            this.labelGroup = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // labelName
@@ -144,11 +146,31 @@
             this.buttonCancel.Text = "Cancel";
             this.buttonCancel.UseVisualStyleBackColor = true;
             // 
+            // comboBoxGroup
+            // 
+            this.comboBoxGroup.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxGroup.FormattingEnabled = true;
+            this.comboBoxGroup.Location = new System.Drawing.Point(178, 40);
+            this.comboBoxGroup.Name = "comboBoxGroup";
+            this.comboBoxGroup.Size = new System.Drawing.Size(121, 23);
+            this.comboBoxGroup.TabIndex = 12;
+            // 
+            // labelGroup
+            // 
+            this.labelGroup.AutoSize = true;
+            this.labelGroup.Location = new System.Drawing.Point(129, 43);
+            this.labelGroup.Name = "labelGroup";
+            this.labelGroup.Size = new System.Drawing.Size(43, 15);
+            this.labelGroup.TabIndex = 13;
+            this.labelGroup.Text = "Group:";
+            // 
             // AddEditEntryDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(454, 523);
+            this.Controls.Add(this.labelGroup);
+            this.Controls.Add(this.comboBoxGroup);
             this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.buttonOK);
             this.Controls.Add(this.textBoxNote);
@@ -181,5 +203,7 @@
         private Label labelNotes;
         private Button buttonOK;
         private Button buttonCancel;
+        private ComboBox comboBoxGroup;
+        private Label labelGroup;
     }
 }

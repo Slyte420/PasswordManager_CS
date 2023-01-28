@@ -60,7 +60,7 @@ namespace PasswordManager
                     return;
                 }
                 instanceC.setAesFromPasswordStringForKey(password,salt);
-                instanceC.getRSAEncryptedFile(username,selectedFolder,passwordHash);
+                instanceC.placeRSAEncryptedFile(username,selectedFolder,passwordHash);
                 instanceC.setAesFromPasswordStringForPasswords(password,salt);
                 byte[]? keyHash = instanceC.getPrivateKeyHash(salt);
                 byte[] encryptedIV = instanceC.getIVEncrypted();
