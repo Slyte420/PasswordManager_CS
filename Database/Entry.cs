@@ -10,12 +10,12 @@ namespace Database
     public class Entry
     {
         public int Id { get; set; }
-        public string Name { get; set; } = null!;
+        public string? Name { get; set; }
         public string? URL { get; set; }
-        public string Username { get; set; } = null!;
+        public string? Username { get; set; } 
         public string Password { get; set; } = null!;
         public string? Notes { get; set; }
-        public User user { get; set; } = null!;
-        public EntryGroup group { get; set; } = null!;
+        public User? user { get; set; } 
+        public EntryGroup? group { get; set; } 
     }
 }

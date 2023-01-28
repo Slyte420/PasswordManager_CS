@@ -1,3 +1,5 @@
+using PasswordManager.Forms;
+
 namespace PasswordManager
 {
     public static class Program
@@ -11,7 +13,7 @@ namespace PasswordManager
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
-            Application.Run(new FirstMenu());
+            Application.Run(new MainMenu());
         }
     }
 }

@@ -2,6 +2,8 @@
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace Database.Migrations
 {
     /// <inheritdoc />
@@ -29,9 +31,11 @@ namespace Database.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Salt = table.Column<byte[]>(type: "varbinary(max)", nullable: false)
+                    Username = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Password = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
+                    Salt = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
+                    IV = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
+                    keyHash = table.Column<byte[]>(type: "varbinary(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -44,13 +48,13 @@ namespace Database.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     URL = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Username = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Username = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Notes = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    userId = table.Column<int>(type: "int", nullable: false),
-                    groupId = table.Column<int>(type: "int", nullable: false)
+                    userId = table.Column<int>(type: "int", nullable: true),
+                    groupId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -59,14 +63,32 @@ namespace Database.Migrations
                         name: "FK_Entries_EntryGroups_groupId",
                         column: x => x.groupId,
                         principalTable: "EntryGroups",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Entries_Users_userId",
                         column: x => x.userId,
                         principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.InsertData(
+                table: "Entries",
+                columns: new[] { "Id", "Name", "Notes", "Password", "URL", "Username", "groupId", "userId" },
+                values: new object[,]
+                {
+                    { 1, null, null, "Password", null, "UserG", null, null },
+                    { 2, null, null, "Password", null, "UserI", null, null },
+                    { 3, null, null, "Password", null, "UserB", null, null }
+                });
+
+            migrationBuilder.InsertData(
+                table: "EntryGroups",
+                columns: new[] { "Id", "Name" },
+                values: new object[,]
+                {
+                    { 1, "General" },
+                    { 2, "Internet" },
+                    { 3, "Banking" }
                 });
 
             migrationBuilder.CreateIndex(
