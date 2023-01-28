@@ -117,5 +117,35 @@ namespace PasswordManager.Crypto
             byte[] salt = RandomNumberGenerator.GetBytes(length);
             return salt;
         }
+        public string encryptString(string text)
+        {
+            ICryptoTransform cryptoTransform = AESInstance.CreateEncryptor();
+            using (MemoryStream memoryStream = new MemoryStream())
+            {
+                using(CryptoStream StreamEncrypted = new CryptoStream(memoryStream, cryptoTransform, CryptoStreamMode.Write))
+                {
+                    using(StreamWriter streamWriter = new StreamWriter(StreamEncrypted))
+                    {
+                        streamWriter.Write(text);
+                    }
+                }
+               return  Encoding.ASCII.GetString( memoryStream.ToArray());
+            }
+        }
+        public string decryptString(string text)
+        {
+            ICryptoTransform cryptoTransform = AESInstance.CreateDecryptor();
+            using (MemoryStream memoryStream = new MemoryStream())
+            {
+                using (CryptoStream StreamEncrypted = new CryptoStream(memoryStream, cryptoTransform, CryptoStreamMode.Write))
+                {
+                    using (StreamWriter streamWriter = new StreamWriter(StreamEncrypted))
+                    {
+                        streamWriter.Write(text);
+                    }
+                }
+                return Encoding.ASCII.GetString(memoryStream.ToArray());
+            }
+        }
     }
 }

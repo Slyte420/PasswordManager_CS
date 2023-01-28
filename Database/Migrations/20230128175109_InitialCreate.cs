@@ -2,8 +2,6 @@
 
 #nullable disable
 
-#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
-
 namespace Database.Migrations
 {
     /// <inheritdoc />
@@ -12,19 +10,6 @@ namespace Database.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateTable(
-                name: "EntryGroups",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_EntryGroups", x => x.Id);
-                });
-
             migrationBuilder.CreateTable(
                 name: "Users",
                 columns: table => new
@@ -35,11 +20,31 @@ namespace Database.Migrations
                     Password = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
                     Salt = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
                     IV = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
-                    keyHash = table.Column<byte[]>(type: "varbinary(max)", nullable: false)
+                    KeyHash = table.Column<byte[]>(type: "varbinary(max)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Users", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "EntryGroups",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    userId = table.Column<int>(type: "int", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EntryGroups", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_EntryGroups_Users_userId",
+                        column: x => x.userId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -53,52 +58,38 @@ namespace Database.Migrations
                     Username = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Notes = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    userId = table.Column<int>(type: "int", nullable: true),
-                    groupId = table.Column<int>(type: "int", nullable: true)
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    GroupId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Entries", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Entries_EntryGroups_groupId",
-                        column: x => x.groupId,
+                        name: "FK_Entries_EntryGroups_GroupId",
+                        column: x => x.GroupId,
                         principalTable: "EntryGroups",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_Entries_Users_userId",
-                        column: x => x.userId,
+                        name: "FK_Entries_Users_UserId",
+                        column: x => x.UserId,
                         principalTable: "Users",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.InsertData(
+            migrationBuilder.CreateIndex(
+                name: "IX_Entries_GroupId",
                 table: "Entries",
-                columns: new[] { "Id", "Name", "Notes", "Password", "URL", "Username", "groupId", "userId" },
-                values: new object[,]
-                {
-                    { 1, null, null, "Password", null, "UserG", null, null },
-                    { 2, null, null, "Password", null, "UserI", null, null },
-                    { 3, null, null, "Password", null, "UserB", null, null }
-                });
+                column: "GroupId");
 
-            migrationBuilder.InsertData(
+            migrationBuilder.CreateIndex(
+                name: "IX_Entries_UserId",
+                table: "Entries",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_EntryGroups_userId",
                 table: "EntryGroups",
-                columns: new[] { "Id", "Name" },
-                values: new object[,]
-                {
-                    { 1, "General" },
-                    { 2, "Internet" },
-                    { 3, "Banking" }
-                });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Entries_groupId",
-                table: "Entries",
-                column: "groupId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Entries_userId",
-                table: "Entries",
                 column: "userId");
         }
 

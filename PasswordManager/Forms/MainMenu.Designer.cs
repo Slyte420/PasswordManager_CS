@@ -38,6 +38,8 @@
             this.buttonAddGroup = new System.Windows.Forms.Button();
             this.buttonEditGroup = new System.Windows.Forms.Button();
             this.buttonDeleteGroup = new System.Windows.Forms.Button();
+            this.buttonShowPass = new System.Windows.Forms.Button();
+            this.buttonFindEntry = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewData)).BeginInit();
             this.SuspendLayout();
             // 
@@ -45,12 +47,14 @@
             // 
             this.dataGridViewData.AllowUserToAddRows = false;
             this.dataGridViewData.AllowUserToDeleteRows = false;
+            this.dataGridViewData.AllowUserToResizeColumns = false;
+            this.dataGridViewData.AllowUserToResizeRows = false;
             this.dataGridViewData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridViewData.Location = new System.Drawing.Point(12, 76);
+            this.dataGridViewData.Location = new System.Drawing.Point(108, 80);
             this.dataGridViewData.Name = "dataGridViewData";
             this.dataGridViewData.ReadOnly = true;
             this.dataGridViewData.RowTemplate.Height = 25;
-            this.dataGridViewData.Size = new System.Drawing.Size(776, 329);
+            this.dataGridViewData.Size = new System.Drawing.Size(581, 329);
             this.dataGridViewData.TabIndex = 0;
             // 
             // comboBoxGroup
@@ -61,6 +65,7 @@
             this.comboBoxGroup.Name = "comboBoxGroup";
             this.comboBoxGroup.Size = new System.Drawing.Size(121, 23);
             this.comboBoxGroup.TabIndex = 1;
+            this.comboBoxGroup.SelectedIndexChanged += new System.EventHandler(this.comboBoxGroup_SelectedIndexChanged);
             // 
             // buttonAdd
             // 
@@ -70,6 +75,7 @@
             this.buttonAdd.TabIndex = 2;
             this.buttonAdd.Text = "Add";
             this.buttonAdd.UseVisualStyleBackColor = true;
+            this.buttonAdd.Click += new System.EventHandler(this.buttonAdd_Click);
             // 
             // buttonEdit
             // 
@@ -134,11 +140,31 @@
             this.buttonDeleteGroup.Text = "Delete Group";
             this.buttonDeleteGroup.UseVisualStyleBackColor = true;
             // 
+            // buttonShowPass
+            // 
+            this.buttonShowPass.Location = new System.Drawing.Point(184, 415);
+            this.buttonShowPass.Name = "buttonShowPass";
+            this.buttonShowPass.Size = new System.Drawing.Size(166, 23);
+            this.buttonShowPass.TabIndex = 10;
+            this.buttonShowPass.Text = "Show Password";
+            this.buttonShowPass.UseVisualStyleBackColor = true;
+            // 
+            // buttonFindEntry
+            // 
+            this.buttonFindEntry.Location = new System.Drawing.Point(356, 415);
+            this.buttonFindEntry.Name = "buttonFindEntry";
+            this.buttonFindEntry.Size = new System.Drawing.Size(166, 23);
+            this.buttonFindEntry.TabIndex = 11;
+            this.buttonFindEntry.Text = "Find Entry";
+            this.buttonFindEntry.UseVisualStyleBackColor = true;
+            // 
             // MainMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.buttonFindEntry);
+            this.Controls.Add(this.buttonShowPass);
             this.Controls.Add(this.buttonDeleteGroup);
             this.Controls.Add(this.buttonEditGroup);
             this.Controls.Add(this.buttonAddGroup);
@@ -169,5 +195,7 @@
         private Button buttonAddGroup;
         private Button buttonEditGroup;
         private Button buttonDeleteGroup;
+        private Button buttonShowPass;
+        private Button buttonFindEntry;
     }
 }

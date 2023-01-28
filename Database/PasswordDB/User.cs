@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Database
+namespace Database.PasswordDB
 {
     public class User
     {
@@ -13,6 +13,6 @@ namespace Database
         public byte[] Password { get; set; } = null!;
         public byte[] Salt { get; set; } = null!;
         public byte[] IV { get; set; } = null!;
-        public byte[] keyHash { get; set; } = null!;
+        public byte[] KeyHash { get; set; } = null!;
     }
 }

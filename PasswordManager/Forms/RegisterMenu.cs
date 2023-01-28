@@ -1,4 +1,4 @@
-﻿using Database;
+﻿using Database.PasswordDB;
 using PasswordManager.Crypto;
 using System;
 using System.Collections.Generic;
@@ -68,7 +68,7 @@ namespace PasswordManager
                 {
                     return;
                 }
-                User currentUser = new User { Username = username,Password=passwordHash,Salt=salt,keyHash=keyHash,IV=encryptedIV };
+                User currentUser = new User { Username = username,Password=passwordHash,Salt=salt,KeyHash=keyHash,IV=encryptedIV };
                 context.Users.Add(currentUser);
                 context.SaveChanges();
                 this.Hide();

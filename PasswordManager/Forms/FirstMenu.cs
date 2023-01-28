@@ -1,5 +1,4 @@
-
-using Database;
+using Database.PasswordDB;
 
 namespace PasswordManager
 {
