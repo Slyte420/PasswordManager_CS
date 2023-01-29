@@ -1,14 +1,6 @@
 ﻿using Database.PasswordDB;
 using PasswordManager.Crypto;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace PasswordManager.Forms
 {
@@ -21,14 +13,15 @@ namespace PasswordManager.Forms
         {
             InitializeComponent();
             instanceC = CryptoInstance.GetInstance();
-            this.groups= groups;
+            this.groups = groups;
             comboBoxGroup.Items.Add("None");
-            foreach(var group in groups)
+            foreach (var group in groups)
             {
                 comboBoxGroup.Items.Add(group.Name);
             }
+            comboBoxGroup.SelectedIndex= 0;
         }
-        public AddEditEntryDialog(List<EntryGroup> groups,Entry entry) : this(groups)
+        public AddEditEntryDialog(List<EntryGroup> groups, Entry entry) : this(groups)
         {
             exist = entry;
             textBoxName.Text = entry.Name;
@@ -48,8 +41,8 @@ namespace PasswordManager.Forms
 
         public Entry? getEntry()
         {
-            
-            if(textBoxPassword.Text == string.Empty || DialogResult == DialogResult.Cancel)
+
+            if (textBoxPassword.Text == string.Empty || DialogResult == DialogResult.Cancel)
             {
                 return null;
             }
@@ -67,7 +60,7 @@ namespace PasswordManager.Forms
 
             }
             current.Password = instanceC.encryptString(textBoxPassword.Text);
-            if((comboBoxGroup.SelectedIndex-1) >= 0)
+            if ((comboBoxGroup.SelectedIndex - 1) >= 0)
             {
                 current.GroupId = groups[comboBoxGroup.SelectedIndex - 1].Id;
             }
@@ -77,15 +70,31 @@ namespace PasswordManager.Forms
             }
             return current;
         }
-        private bool valid()
-        {
-            //TODO: Implementalni
-            return true;
-        }
+        
         private void buttonOK_Click(object sender, EventArgs e)
         {
-            if (!valid())
+            if(textBoxName.Text == String.Empty)
+            {
+                MessageBox.Show("Please include a name for entry!");
                 DialogResult = DialogResult.None;
+            }
+            if (!RNGPassword.validPassword(textBoxPassword.Text))
+            {
+                MessageBox.Show("Not a valid password!");
+                DialogResult = DialogResult.None;
+            }
+                
+        }
+
+        private void buttonGenPass_Click(object sender, EventArgs e)
+        {
+            using(GeneratePasswordDialog dialog = new GeneratePasswordDialog())
+            {
+                if(dialog.ShowDialog() == DialogResult.OK)
+                {
+                    textBoxPassword.Text = dialog.generatePassword();
+                }
+            }
         }
     }
 }

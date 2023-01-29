@@ -1,5 +1,3 @@
-using PasswordManager.Forms;
-
 namespace PasswordManager
 {
     public static class Program

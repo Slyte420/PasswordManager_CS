@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography;
+﻿using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace PasswordManager.Crypto
 {
@@ -16,8 +12,10 @@ namespace PasswordManager.Crypto
         private const string _LowerCaseLetters = "abcdefghijklmnopqrstuvwxyz";
         private const string _UpperCaseLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         private const string _Numbers = "0123456789";
-        private const string specialCharacthers = "@!./?<>;[]\\(){}";
-        RNGPassword(bool upperCharB, bool lowerCharB, bool numbersB, bool specialB)
+        private const string _specialCharacthers = "@!./?<>;[]\\(){}";
+        private const int minLength = 10;
+        private const int maxLength = 32;
+        public RNGPassword(bool upperCharB, bool lowerCharB, bool numbersB, bool specialB)
         {
             this.upperCharB = upperCharB;
             this.lowerCharB = lowerCharB;
@@ -27,36 +25,74 @@ namespace PasswordManager.Crypto
 
         public string? generatePassword(int length)
         {
-            string availableChars = string.Empty;
-            if (upperCharB) {
-                availableChars.Concat(_UpperCaseLetters);
-            }
-            if(lowerCharB) {
-                availableChars.Concat(_LowerCaseLetters);
-            }
-            if(numbersB)
-            {
-                availableChars.Concat(_Numbers);
-            }
-            if(specialB) { 
-                availableChars.Concat(specialCharacthers);
-             }
-            if(availableChars.Length <= 0)
+            if(length <= 0)
             {
                 return null;
             }
-            
-            StringBuilder str= new StringBuilder();
-            for(int i = 0; i < length; i++)
+            string availableChars = string.Empty;
+            if (upperCharB)
+            {
+                availableChars = availableChars + _UpperCaseLetters;
+            }
+            if (lowerCharB)
+            {
+                availableChars= availableChars + _LowerCaseLetters;
+            }
+            if (numbersB)
+            {
+                availableChars= availableChars + _Numbers;
+            }
+            if (specialB)
+            {
+                availableChars = availableChars + _specialCharacthers;
+            }
+            if (availableChars.Length <= 0)
+            {
+                return null;
+            }
+
+            StringBuilder str = new StringBuilder();
+            for (int i = 0; i < length; i++)
             {
                 str.Append(availableChars[RandomNumberGenerator.GetInt32(availableChars.Length)]);
             }
             return str.ToString();
         }
-        public bool validPassword(string password)
+        public static int getMin()
         {
-            //TODO
-            return true;
+            return minLength;
+        }
+        public static int getMax()
+        {
+            return maxLength;
+        }
+        public static bool validPassword(string password)
+        {
+            if (!(password.Length >= minLength && password.Length <= maxLength))
+            {
+                return false;
+            }
+            bool[] reqCheck = new bool[4];
+            foreach(char i in password)
+            {
+                if(_UpperCaseLetters.Contains(i))
+                {
+                    reqCheck[0] = true;
+                }
+                if(_LowerCaseLetters.Contains(i)) 
+                {
+                    reqCheck[1] = true;
+                }
+                if (_Numbers.Contains(i)) 
+                {
+                    reqCheck[2] = true;
+                }
+                if (_specialCharacthers.Contains(i))
+                {
+                    reqCheck[3] = true;
+                }
+            }
+            return reqCheck.All(result => true);
         }
     }
 }

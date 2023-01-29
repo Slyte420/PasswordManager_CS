@@ -1,16 +1,7 @@
 ﻿using Database.PasswordDB;
 using PasswordManager.Crypto;
 using PasswordManager.Forms;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Configuration;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace PasswordManager
 {
@@ -19,14 +10,14 @@ namespace PasswordManager
         private SQLSContext context = null!;
         private FirstMenu firstMenu = null!;
         private MainMenu mainMenu = null!;
-        private CryptoInstance instanceC= null!;
+        private CryptoInstance instanceC = null!;
         private string? selectedFolder;
         public RegisterMenu(FirstMenu firstMenu)
         {
             InitializeComponent();
             this.firstMenu = firstMenu;
-            
-            
+
+
         }
 
 
@@ -59,32 +50,39 @@ namespace PasswordManager
             string username = textBoxUsername.Text;
             context = new SQLSContext();
             var queryUsername = from user in context.Users
-                                where user.Username== username
+                                where user.Username == username
                                 select user.Username;
             if (!queryUsername.Any())
             {
                 string password = textBoxPassword.Text;
+                if(!RNGPassword.validPassword(password))
+                {
+                    MessageBox.Show("Not a valid password!");
+                    return;
+                      
+                }
                 byte[] salt = instanceC.generateSalt(32);
                 byte[]? passwordHash = instanceC.hashStringSalt(password, salt);
-                if(passwordHash is null) {
-                    return;
-                }
-                instanceC.setAesFromPasswordStringForKey(password,salt);
-                instanceC.placeRSAEncryptedFile(username,selectedFolder,passwordHash);
-                instanceC.setAesFromPasswordStringForPasswords(password,salt);
-                byte[]? keyHash = instanceC.getPrivateKeyHash(salt);
-                byte[] encryptedIV = instanceC.getIVEncrypted();
-                if(keyHash is null)
+                if (passwordHash is null)
                 {
                     return;
                 }
-                User currentUser = new User { Username = username,Password=passwordHash,Salt=salt,KeyHash=keyHash,IV=encryptedIV };
+                instanceC.setAesFromPasswordStringForKey(password, salt);
+                instanceC.placeRSAEncryptedFile(username, selectedFolder, passwordHash);
+                instanceC.setAesFromPasswordStringForPasswords(password, salt);
+                byte[]? keyHash = instanceC.getPrivateKeyHash(salt);
+                byte[] encryptedIV = instanceC.getIVEncrypted();
+                if (keyHash is null)
+                {
+                    return;
+                }
+                User currentUser = new User { Username = username, Password = passwordHash, Salt = salt, KeyHash = keyHash, IV = encryptedIV };
                 context.Users.Add(currentUser);
                 context.SaveChanges();
                 context.Dispose();
                 this.Hide();
                 reset();
-                mainMenu = new MainMenu(currentUser,firstMenu);
+                mainMenu = new MainMenu(currentUser, firstMenu);
                 mainMenu.Show();
             }
             else
@@ -95,7 +93,7 @@ namespace PasswordManager
 
         private void buttonSaveKey_Click(object sender, EventArgs e)
         {
-            if(FolderBrowserDialogKey.ShowDialog() == DialogResult.OK)
+            if (FolderBrowserDialogKey.ShowDialog() == DialogResult.OK)
             {
                 selectedFolder = FolderBrowserDialogKey.SelectedPath;
             }

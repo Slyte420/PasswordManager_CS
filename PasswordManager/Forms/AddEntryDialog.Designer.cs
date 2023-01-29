@@ -42,6 +42,7 @@
             this.buttonCancel = new System.Windows.Forms.Button();
             this.comboBoxGroup = new System.Windows.Forms.ComboBox();
             this.labelGroup = new System.Windows.Forms.Label();
+            this.buttonGenPass = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // labelName
@@ -164,11 +165,22 @@
             this.labelGroup.TabIndex = 13;
             this.labelGroup.Text = "Group:";
             // 
+            // buttonGenPass
+            // 
+            this.buttonGenPass.Location = new System.Drawing.Point(296, 380);
+            this.buttonGenPass.Name = "buttonGenPass";
+            this.buttonGenPass.Size = new System.Drawing.Size(146, 23);
+            this.buttonGenPass.TabIndex = 14;
+            this.buttonGenPass.Text = "Generate Password";
+            this.buttonGenPass.UseVisualStyleBackColor = true;
+            this.buttonGenPass.Click += new System.EventHandler(this.buttonGenPass_Click);
+            // 
             // AddEditEntryDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(454, 523);
+            this.Controls.Add(this.buttonGenPass);
             this.Controls.Add(this.labelGroup);
             this.Controls.Add(this.comboBoxGroup);
             this.Controls.Add(this.buttonCancel);
@@ -205,5 +217,6 @@
         private Button buttonCancel;
         private ComboBox comboBoxGroup;
         private Label labelGroup;
+        private Button buttonGenPass;
     }
 }

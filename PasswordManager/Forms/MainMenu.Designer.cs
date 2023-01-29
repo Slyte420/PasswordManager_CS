@@ -53,6 +53,7 @@
             this.dataGridViewData.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.DisplayedCells;
             this.dataGridViewData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewData.Location = new System.Drawing.Point(108, 80);
+            this.dataGridViewData.MultiSelect = false;
             this.dataGridViewData.Name = "dataGridViewData";
             this.dataGridViewData.ReadOnly = true;
             this.dataGridViewData.RowHeadersVisible = false;
@@ -111,6 +112,7 @@
             this.buttonCopyClipBoard.TabIndex = 6;
             this.buttonCopyClipBoard.Text = "Copy Password to Clipboard";
             this.buttonCopyClipBoard.UseVisualStyleBackColor = true;
+            this.buttonCopyClipBoard.Click += new System.EventHandler(this.buttonCopyClipBoard_Click);
             // 
             // buttonAddGroup
             // 
@@ -150,6 +152,7 @@
             this.buttonShowPass.TabIndex = 10;
             this.buttonShowPass.Text = "Show Password";
             this.buttonShowPass.UseVisualStyleBackColor = true;
+            this.buttonShowPass.Click += new System.EventHandler(this.buttonShowPass_Click);
             // 
             // buttonFindEntry
             // 
@@ -159,6 +162,7 @@
             this.buttonFindEntry.TabIndex = 11;
             this.buttonFindEntry.Text = "Find Entry";
             this.buttonFindEntry.UseVisualStyleBackColor = true;
+            this.buttonFindEntry.Click += new System.EventHandler(this.buttonFindEntry_Click);
             // 
             // buttonExit
             // 
@@ -189,6 +193,7 @@
             this.Controls.Add(this.dataGridViewData);
             this.Name = "MainMenu";
             this.Text = "MainMenu";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainMenu_FormClosing);
             this.Load += new System.EventHandler(this.MainMenu_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewData)).EndInit();
             this.ResumeLayout(false);

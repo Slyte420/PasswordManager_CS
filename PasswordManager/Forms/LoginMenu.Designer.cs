@@ -69,10 +69,11 @@
             this.textBoxPassword.Name = "textBoxPassword";
             this.textBoxPassword.Size = new System.Drawing.Size(142, 23);
             this.textBoxPassword.TabIndex = 3;
+            this.textBoxPassword.UseSystemPasswordChar = true;
             // 
             // buttonGetKeyFile
             // 
-            this.buttonGetKeyFile.Location = new System.Drawing.Point(303, 218);
+            this.buttonGetKeyFile.Location = new System.Drawing.Point(303, 184);
             this.buttonGetKeyFile.Name = "buttonGetKeyFile";
             this.buttonGetKeyFile.Size = new System.Drawing.Size(208, 23);
             this.buttonGetKeyFile.TabIndex = 4;
@@ -82,7 +83,7 @@
             // 
             // buttonLogin
             // 
-            this.buttonLogin.Location = new System.Drawing.Point(303, 264);
+            this.buttonLogin.Location = new System.Drawing.Point(303, 213);
             this.buttonLogin.Name = "buttonLogin";
             this.buttonLogin.Size = new System.Drawing.Size(208, 23);
             this.buttonLogin.TabIndex = 5;
@@ -99,10 +100,6 @@
             this.buttonBack.Text = "Back";
             this.buttonBack.UseVisualStyleBackColor = true;
             this.buttonBack.Click += new System.EventHandler(this.buttonBack_Click);
-            // 
-            // openFileDialogKey
-            // 
-            this.openFileDialogKey.FileName = "openFileDialog1";
             // 
             // LoginMenu
             // 

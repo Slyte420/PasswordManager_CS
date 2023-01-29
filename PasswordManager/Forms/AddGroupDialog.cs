@@ -1,13 +1,4 @@
 ﻿using Database.PasswordDB;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace PasswordManager.Forms
 {
@@ -25,17 +16,17 @@ namespace PasswordManager.Forms
         }
         public EntryGroup? getGroup()
         {
-            if(textBoxName.Text.Length == 0)
+            if (textBoxName.Text.Length == 0)
             {
                 return null;
             }
-            if(exist == null)
+            if (exist == null)
             {
                 exist = new EntryGroup { Name = textBoxName.Text };
             }
             else
             {
-                exist.Name= textBoxName.Text;
+                exist.Name = textBoxName.Text;
             }
             return exist;
         }

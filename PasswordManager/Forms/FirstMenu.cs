@@ -1,4 +1,3 @@
-using Database.PasswordDB;
 using PasswordManager.Forms;
 
 namespace PasswordManager
@@ -6,7 +5,7 @@ namespace PasswordManager
     public partial class FirstMenu : Form
     {
         private LoginMenu loginMenu = null!;
-        private RegisterMenu registerMenu= null!;
+        private RegisterMenu registerMenu = null!;
         public FirstMenu()
         {
             InitializeComponent();
@@ -14,11 +13,10 @@ namespace PasswordManager
             loginMenu = new LoginMenu(this);
         }
 
-       
+
 
         private void buttonRegister_Click(object sender, EventArgs e)
         {
-            
             registerMenu.Show();
             this.Hide();
         }
@@ -26,8 +24,8 @@ namespace PasswordManager
         private void FirstMenu_Load(object sender, EventArgs e)
         {
 
-           
-            
+
+
         }
 
         private void FirstMenu_FormClosing(object sender, FormClosingEventArgs e)
