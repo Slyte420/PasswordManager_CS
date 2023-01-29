@@ -1,15 +1,17 @@
 using Database.PasswordDB;
+using PasswordManager.Forms;
 
 namespace PasswordManager
 {
     public partial class FirstMenu : Form
     {
-        private SQLSContext context = null!;
+        private LoginMenu loginMenu = null!;
         private RegisterMenu registerMenu= null!;
         public FirstMenu()
         {
             InitializeComponent();
-            registerMenu = new RegisterMenu(context,this);
+            registerMenu = new RegisterMenu(this);
+            loginMenu = new LoginMenu(this);
         }
 
        
@@ -24,13 +26,20 @@ namespace PasswordManager
         private void FirstMenu_Load(object sender, EventArgs e)
         {
 
-            context= new SQLSContext();
+           
             
         }
 
         private void FirstMenu_FormClosing(object sender, FormClosingEventArgs e)
         {
-            this.context?.Dispose();
+            loginMenu.Dispose();
+            registerMenu.Dispose();
+        }
+
+        private void buttonLogin_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            loginMenu.Show();
         }
     }
 }

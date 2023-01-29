@@ -33,7 +33,7 @@ namespace PasswordManager.Forms
             exist = entry;
             textBoxName.Text = entry.Name;
             textBoxUsername.Text = entry.Username;
-            //textBoxPassword.Text = instanceC.decryptString(Text);
+            textBoxPassword.Text = instanceC.decryptString(entry.Password);
             textBoxURL.Text = entry.URL;
             textBoxNote.Text = entry.Note;
             var query = (from gr in groups

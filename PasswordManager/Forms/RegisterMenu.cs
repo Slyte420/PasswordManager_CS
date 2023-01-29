@@ -1,5 +1,6 @@
 ﻿using Database.PasswordDB;
 using PasswordManager.Crypto;
+using PasswordManager.Forms;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -17,14 +18,15 @@ namespace PasswordManager
     {
         private SQLSContext context = null!;
         private FirstMenu firstMenu = null!;
+        private MainMenu mainMenu = null!;
         private CryptoInstance instanceC= null!;
         private string? selectedFolder;
-        public RegisterMenu(SQLSContext context,FirstMenu firstMenu)
+        public RegisterMenu(FirstMenu firstMenu)
         {
             InitializeComponent();
             this.firstMenu = firstMenu;
-            this.context = context;
-            instanceC = CryptoInstance.GetInstance();
+            
+            
         }
 
 
@@ -33,21 +35,29 @@ namespace PasswordManager
             firstMenu.Close();
         }
 
+        private void reset()
+        {
+            textBoxUsername.Text = string.Empty;
+            textBoxPassword.Text = string.Empty;
+            selectedFolder = null;
+        }
         private void buttonBack_Click(object sender, EventArgs e)
         {
             this.Hide();
             firstMenu.Show();
-            
+            reset();
         }
 
         private void buttonRegister_Click(object sender, EventArgs e)
         {
-            if(selectedFolder is null)
+            instanceC = CryptoInstance.GetInstance();
+            if (selectedFolder is null)
             {
                 MessageBox.Show("No folder selected");
                 return;
             }
             string username = textBoxUsername.Text;
+            context = new SQLSContext();
             var queryUsername = from user in context.Users
                                 where user.Username== username
                                 select user.Username;
@@ -71,16 +81,23 @@ namespace PasswordManager
                 User currentUser = new User { Username = username,Password=passwordHash,Salt=salt,KeyHash=keyHash,IV=encryptedIV };
                 context.Users.Add(currentUser);
                 context.SaveChanges();
+                context.Dispose();
                 this.Hide();
-                //Main menu form
+                reset();
+                mainMenu = new MainMenu(currentUser,firstMenu);
+                mainMenu.Show();
+            }
+            else
+            {
+                MessageBox.Show("Username not available!");
             }
         }
 
         private void buttonSaveKey_Click(object sender, EventArgs e)
         {
-            if(keyFolderBrowserDialog.ShowDialog() == DialogResult.OK)
+            if(FolderBrowserDialogKey.ShowDialog() == DialogResult.OK)
             {
-                selectedFolder = keyFolderBrowserDialog.SelectedPath;
+                selectedFolder = FolderBrowserDialogKey.SelectedPath;
             }
         }
     }

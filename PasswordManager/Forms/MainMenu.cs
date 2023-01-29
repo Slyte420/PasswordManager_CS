@@ -1,5 +1,6 @@
 ﻿using Database.PasswordDB;
 using Microsoft.EntityFrameworkCore;
+using PasswordManager.Crypto;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -15,13 +16,16 @@ namespace PasswordManager.Forms
     public partial class MainMenu : Form
     {
         private SQLSContext context = null!;
-        private User? user;
+        private User user = null!;
         private List<Entry> entries= null!;
         private List<EntryGroup> groups = null!;
         private BindingSource bs = null!;
-        int[] columnsDisabled = {0,6,7,8,9 };
-        public MainMenu()
+        private FirstMenu firstmenu = null!;
+        int[] columnsDisabled = {0,4,6,7,8,9 };
+        public MainMenu(User user,FirstMenu firstmenu)
         {
+            this.user = user;
+            this.firstmenu = firstmenu;
             InitializeComponent();
             
             
@@ -31,6 +35,7 @@ namespace PasswordManager.Forms
         {
             context = new SQLSContext();
             user = (from users in context.Users
+                    where users.Username == user.Username
                     select users).First();
             var taskGroups = AsyncOperationsPassDB.getGroupsAsync(user.Id);
             var taskEntries = AsyncOperationsPassDB.getEntriesAsync(user.Id);
@@ -74,20 +79,13 @@ namespace PasswordManager.Forms
             else
             {
                 bs.DataSource = entries;
-                //foreach (int i in columnsDisabled)
-                //{
-                //    dataGridViewData.Columns[i].Visible = false;
-                //}
+                
             }
             refresh();
         }
 
         private void buttonAdd_Click(object sender, EventArgs e)
         {
-            if (user == null)
-            {
-                return;
-            }
             Entry? entry= null;
             using (AddEditEntryDialog dialog = new AddEditEntryDialog(groups))
             {
@@ -104,6 +102,7 @@ namespace PasswordManager.Forms
             entry.UserId = user.Id;
             context.Add(entry);
             entries.Add(entry);
+            context.SaveChanges();
             refresh();
         }
 
@@ -128,7 +127,7 @@ namespace PasswordManager.Forms
             }
             using (AddEditEntryDialog dialog = new AddEditEntryDialog(groups,result))
             {
-                dialog.Text = "Add";
+                dialog.Text = "Edit";
                 if (dialog.ShowDialog() == DialogResult.OK)
                 {
                     result = dialog.getEntry();
@@ -144,7 +143,7 @@ namespace PasswordManager.Forms
             index = entries.FindIndex(entry => entry.Id == currentEntry.Id);
             
             entries[index] = result;
-            //context.SaveChanges();
+            context.SaveChanges();
             refresh();
         }
 
@@ -176,6 +175,89 @@ namespace PasswordManager.Forms
             }
             context.SaveChanges();
             refresh();
+        }
+
+        private void buttonAddGroup_Click(object sender, EventArgs e)
+        {
+            EntryGroup? groupE = null;
+            using (AddGroupDialog dialog = new AddGroupDialog())
+            {
+                dialog.Text = "Add";
+                if (dialog.ShowDialog() == DialogResult.OK)
+                {
+                    groupE = dialog.getGroup();
+                }
+            }
+            if (groupE == null)
+            {
+                return;
+            }
+            groupE.userId = user.Id;
+            context.Add(groupE);
+            comboBoxGroup.Items.Add(groupE.Name);
+            groups.Add(groupE);
+            context.SaveChanges();
+        }
+
+        private void buttonEditGroup_Click(object sender, EventArgs e)
+        {
+            int index = comboBoxGroup.SelectedIndex;
+            int groupIndex = index - 1;
+            if (groupIndex < 0)
+            {
+                return;
+            }
+            EntryGroup? groupE = context.EntryGroups.SingleOrDefault(group => group.Id == groups[groupIndex].Id);
+            if(groupE == null) 
+            { 
+                return;
+            }
+            using (AddGroupDialog dialog = new AddGroupDialog(groupE))
+            {
+                dialog.Text = "Edit";
+                if (dialog.ShowDialog() == DialogResult.OK)
+                {
+                    groupE = dialog.getGroup();
+                }
+            }
+            if (groupE == null)
+            {
+                return;
+            }
+            
+            context.EntryGroups.Update(groupE);
+            comboBoxGroup.Items.RemoveAt(index);
+            comboBoxGroup.Items.Insert(index,groupE.Name);
+            groups[groupIndex] = groupE;
+            comboBoxGroup.SelectedIndex = index;
+            context.SaveChanges();
+        }
+
+        private void buttonDeleteGroup_Click(object sender, EventArgs e)
+        {
+            int index = comboBoxGroup.SelectedIndex;
+            if ((index - 1) < 0)
+            {
+                return;
+            }
+            EntryGroup? groupE = context.EntryGroups.SingleOrDefault(group => group.Id == groups[index - 1].Id);
+            if (groupE == null)
+            {
+                return;
+            }
+            context.EntryGroups.Remove(groupE);
+            comboBoxGroup.Items.RemoveAt(index);
+            groups.RemoveAt(index-1);
+            comboBoxGroup.SelectedIndex = 0;
+            context.SaveChanges();
+        }
+
+        private void buttonExit_Click(object sender, EventArgs e)
+        {
+            this.Dispose();
+            CryptoInstance instance = CryptoInstance.GetInstance();
+            instance.reset();
+            firstmenu.Show();
         }
     }
 }

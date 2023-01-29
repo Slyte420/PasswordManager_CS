@@ -33,7 +33,6 @@
             this.buttonAdd = new System.Windows.Forms.Button();
             this.buttonEdit = new System.Windows.Forms.Button();
             this.buttonDelete = new System.Windows.Forms.Button();
-            this.buttonSave = new System.Windows.Forms.Button();
             this.buttonCopyClipBoard = new System.Windows.Forms.Button();
             this.buttonAddGroup = new System.Windows.Forms.Button();
             this.buttonEditGroup = new System.Windows.Forms.Button();
@@ -104,15 +103,6 @@
             this.buttonDelete.UseVisualStyleBackColor = true;
             this.buttonDelete.Click += new System.EventHandler(this.buttonDelete_Click);
             // 
-            // buttonSave
-            // 
-            this.buttonSave.Location = new System.Drawing.Point(699, 31);
-            this.buttonSave.Name = "buttonSave";
-            this.buttonSave.Size = new System.Drawing.Size(75, 23);
-            this.buttonSave.TabIndex = 5;
-            this.buttonSave.Text = "Save";
-            this.buttonSave.UseVisualStyleBackColor = true;
-            // 
             // buttonCopyClipBoard
             // 
             this.buttonCopyClipBoard.Location = new System.Drawing.Point(12, 415);
@@ -130,6 +120,7 @@
             this.buttonAddGroup.TabIndex = 7;
             this.buttonAddGroup.Text = "Add Group";
             this.buttonAddGroup.UseVisualStyleBackColor = true;
+            this.buttonAddGroup.Click += new System.EventHandler(this.buttonAddGroup_Click);
             // 
             // buttonEditGroup
             // 
@@ -139,6 +130,7 @@
             this.buttonEditGroup.TabIndex = 8;
             this.buttonEditGroup.Text = "Edit Group";
             this.buttonEditGroup.UseVisualStyleBackColor = true;
+            this.buttonEditGroup.Click += new System.EventHandler(this.buttonEditGroup_Click);
             // 
             // buttonDeleteGroup
             // 
@@ -148,6 +140,7 @@
             this.buttonDeleteGroup.TabIndex = 9;
             this.buttonDeleteGroup.Text = "Delete Group";
             this.buttonDeleteGroup.UseVisualStyleBackColor = true;
+            this.buttonDeleteGroup.Click += new System.EventHandler(this.buttonDeleteGroup_Click);
             // 
             // buttonShowPass
             // 
@@ -169,12 +162,13 @@
             // 
             // buttonExit
             // 
-            this.buttonExit.Location = new System.Drawing.Point(699, 415);
+            this.buttonExit.Location = new System.Drawing.Point(698, 31);
             this.buttonExit.Name = "buttonExit";
             this.buttonExit.Size = new System.Drawing.Size(75, 23);
             this.buttonExit.TabIndex = 12;
             this.buttonExit.Text = "Exit";
             this.buttonExit.UseVisualStyleBackColor = true;
+            this.buttonExit.Click += new System.EventHandler(this.buttonExit_Click);
             // 
             // MainMenu
             // 
@@ -188,7 +182,6 @@
             this.Controls.Add(this.buttonEditGroup);
             this.Controls.Add(this.buttonAddGroup);
             this.Controls.Add(this.buttonCopyClipBoard);
-            this.Controls.Add(this.buttonSave);
             this.Controls.Add(this.buttonDelete);
             this.Controls.Add(this.buttonEdit);
             this.Controls.Add(this.buttonAdd);
@@ -209,7 +202,6 @@
         private Button buttonAdd;
         private Button buttonEdit;
         private Button buttonDelete;
-        private Button buttonSave;
         private Button buttonCopyClipBoard;
         private Button buttonAddGroup;
         private Button buttonEditGroup;

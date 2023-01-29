@@ -35,7 +35,7 @@
             this.buttonRegister = new System.Windows.Forms.Button();
             this.buttonBack = new System.Windows.Forms.Button();
             this.buttonSaveKey = new System.Windows.Forms.Button();
-            this.keyFolderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
+            this.FolderBrowserDialogKey = new System.Windows.Forms.FolderBrowserDialog();
             this.SuspendLayout();
             // 
             // textBoxUsername
@@ -130,6 +130,6 @@
         private Button buttonRegister;
         private Button buttonBack;
         private Button buttonSaveKey;
-        private FolderBrowserDialog keyFolderBrowserDialog;
+        private FolderBrowserDialog FolderBrowserDialogKey;
     }
 }
