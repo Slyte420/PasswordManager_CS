@@ -57,6 +57,7 @@ namespace PasswordManager.Forms
                         select curuser;
             if (!query.Any())
             {
+                MessageBox.Show("No such user!");
                 return;
             }
 

@@ -249,6 +249,17 @@ namespace PasswordManager.Forms
             }
             context.EntryGroups.Remove(groupE);
             comboBoxGroup.Items.RemoveAt(index);
+            var query = from entries in context.Entries
+                        where entries.GroupId == groupE.Id
+                        select entries;
+            var GEntries = context.Entries.Where(e => e.GroupId == groupE.Id);
+            if (GEntries.Any())
+            {
+                foreach (Entry entry in GEntries)
+                {
+                    entry.GroupId = null;
+                }
+            }
             groups.RemoveAt(index - 1);
             comboBoxGroup.SelectedIndex = 0;
             context.SaveChanges();
@@ -316,7 +327,12 @@ namespace PasswordManager.Forms
                     {
                         return;
                     }
-                    var query = from entry in entries
+                    List<Entry>? currentEntries = bs.DataSource as List<Entry>;
+                    if(currentEntries == null)
+                    {
+                        return;
+                    }
+                    var query = from entry in currentEntries
                                 where entry.Name == name
                                 select entry;
                     bs.DataSource = query.ToList();
